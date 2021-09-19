@@ -18,7 +18,7 @@ URLs have the formats:
 /:url/
 ```
 
-* `url` must be URI encoded.
+<!-- * `url` must be URI encoded.
 
 ### Advanced: Manual Cache Busting
 
@@ -28,4 +28,4 @@ This can be any arbitrary string tied to your unique build, here’s an example 
 
 ```
 /:url/_20210802/
-```
+``` -->
