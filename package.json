@@ -1,0 +1,27 @@
+{
+  "name": "eleventy-api-indieweb-avatar",
+  "version": "1.0.0",
+  "description": "A runtime service to extract avatar images from the HTML on a web site.",
+  "scripts": {},
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/11ty/indieweb-avatar.git"
+  },
+  "author": {
+    "name": "Zach Leatherman",
+    "email": "zachleatherman@gmail.com",
+    "url": "https://zachleat.com/"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/11ty/indieweb-avatar/issues"
+  },
+  "homepage": "https://github.com/11ty/indieweb-avatar#readme",
+  "dependencies": {
+    "@11ty/eleventy-img": "^1.0.0-beta.2",
+    "@netlify/functions": "^0.7.2",
+    "cheerio": "^1.0.0-rc.10",
+    "node-fetch": "^2.6.2"
+  }
+}

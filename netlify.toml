@@ -1,0 +1,8 @@
+[functions]
+directory = "functions"
+
+[[redirects]]
+from = "/*"
+to = "/.netlify/functions/avatar"
+status = 200
+force = true
