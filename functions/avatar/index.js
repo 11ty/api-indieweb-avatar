@@ -1,20 +1,5 @@
 const { builder } = require("@netlify/functions");
-const EleventyImage = require("@11ty/eleventy-img");
 const AvatarHtml = require("./avatarHtml.js");
-
-const WIDTH = 150;
-const HEIGHT = 150;
-const IMAGE_FORMAT = "jpeg";
-
-function isFullUrl(url) {
-  try {
-    new URL(url);
-    return true;
-  } catch(e) {
-    // invalid url OR local path
-    return false;
-  }
-}
 
 async function handler(event, context) {
   // e.g. /https%3A%2F%2Fwww.11ty.dev%2F/
@@ -24,32 +9,24 @@ async function handler(event, context) {
   url = decodeURIComponent(url);
 
   try {
-    if(!isFullUrl(url)) {
-      throw new Error(`Invalid \`url\`: ${url}`);
-    }
-
     // output to Function logs
     console.log("Fetching", url);
 
     let avatar = new AvatarHtml(url);
-    let html = await avatar.fetch();
-    let avatarUrl = avatar.findAvatar();
+    await avatar.fetch();
+
+    let avatarUrl = avatar.findAvatarUrl();
     if(!avatarUrl) {
       throw new Error("Avatar not found at " + url);
     }
-    let stats = await EleventyImage(avatarUrl, {
-      widths: [WIDTH],
-      format: [IMAGE_FORMAT],
-      dryRun: true,
-    });
-    let output = stats[IMAGE_FORMAT][0].buffer;
+    let buffer = await avatar.optimizeAvatar(avatarUrl);
 
     return {
       statusCode: 200,
       headers: {
         "content-type": `image/${IMAGE_FORMAT}`
       },
-      body: output,
+      body: buffer.toString("base64"),
       isBase64Encoded: true
     };
   } catch (error) {

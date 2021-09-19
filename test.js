@@ -1,7 +1,11 @@
 const AvatarHtml = require("./functions/avatar/avatarHtml");
 
 (async function() {
-  let avatar = new AvatarHtml("https://www.zachleat.com/");
+  let avatar = new AvatarHtml("https://www.netlify.com/");
   let html = await avatar.fetch();
-  console.log( avatar.findAvatar() );
+  let avatarUrl = avatar.findAvatarUrl();
+  console.log( avatarUrl );
+
+  let buffer = await avatar.optimizeAvatar(avatarUrl);
+  console.log( buffer.toString() );
 })();
