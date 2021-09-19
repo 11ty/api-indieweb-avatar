@@ -2,8 +2,6 @@ const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 const EleventyImage = require("@11ty/eleventy-img");
 
-const IMAGE_FORMAT = "jpeg";
-
 class AvatarHtml {
   constructor(url) {
     this.url = url;
@@ -64,14 +62,14 @@ class AvatarHtml {
     return relIcon;
   }
 
-  async optimizeAvatar(avatarUrl, width) {
+  async optimizeAvatar(avatarUrl, width, imageFormat) {
     let stats = await EleventyImage(avatarUrl, {
       widths: [width],
-      format: [IMAGE_FORMAT],
+      format: [imageFormat],
       dryRun: true,
     });
 
-    let output = stats[IMAGE_FORMAT][0].buffer;
+    let output = stats[imageFormat][0].buffer;
     return output;
   }
 }

@@ -3,6 +3,7 @@ const AvatarHtml = require("./avatarHtml.js");
 
 const IMAGE_WIDTH = 150;
 const IMAGE_HEIGHT = 150;
+const IMAGE_FORMAT = "jpeg";
 
 async function handler(event, context) {
   // e.g. /https%3A%2F%2Fwww.11ty.dev%2F/
@@ -22,7 +23,7 @@ async function handler(event, context) {
     if(!avatarUrl) {
       throw new Error("Avatar not found at " + url);
     }
-    let buffer = await avatar.optimizeAvatar(avatarUrl, IMAGE_WIDTH);
+    let buffer = await avatar.optimizeAvatar(avatarUrl, IMAGE_WIDTH, IMAGE_FORMAT);
 
     return {
       statusCode: 200,

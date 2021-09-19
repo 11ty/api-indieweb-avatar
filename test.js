@@ -6,6 +6,6 @@ const AvatarHtml = require("./functions/avatar/avatarHtml");
   let avatarUrl = avatar.findAvatarUrl();
   console.log( avatarUrl );
 
-  let buffer = await avatar.optimizeAvatar(avatarUrl);
+  let buffer = await avatar.optimizeAvatar(avatarUrl, 150, "jpeg");
   console.log( buffer.toString() );
 })();
