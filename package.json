@@ -19,9 +19,5 @@
   },
   "homepage": "https://github.com/11ty/indieweb-avatar#readme",
   "dependencies": {
-    "@11ty/eleventy-img": "^1.0.0-beta.2",
-    "@netlify/functions": "^0.7.2",
-    "cheerio": "^1.0.0-rc.10",
-    "node-fetch": "^2.6.2"
   }
 }

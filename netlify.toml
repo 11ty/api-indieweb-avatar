@@ -1,8 +1,6 @@
-[functions]
-directory = "functions"
 
 [[redirects]]
 from = "/*"
-to = "/.netlify/functions/avatar"
-status = 200
+to = "https://v1.indieweb-avatar.11ty.dev/:splat"
+status = 301
 force = true
