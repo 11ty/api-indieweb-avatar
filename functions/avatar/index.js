@@ -4,7 +4,7 @@ const AvatarHtml = require("./avatarHtml.js");
 
 const WIDTH = 150;
 const HEIGHT = 150;
-const FORMAT = "jpeg";
+const IMAGE_FORMAT = "jpeg";
 
 function isFullUrl(url) {
   try {
@@ -39,15 +39,15 @@ async function handler(event, context) {
     }
     let stats = await EleventyImage(avatarUrl, {
       widths: [WIDTH],
-      format: [FORMAT],
+      format: [IMAGE_FORMAT],
       dryRun: true,
     });
-    let output = stats[format][0].buffer;
+    let output = stats[IMAGE_FORMAT][0].buffer;
 
     return {
       statusCode: 200,
       headers: {
-        "content-type": `image/${format}`
+        "content-type": `image/${IMAGE_FORMAT}`
       },
       body: output,
       isBase64Encoded: true
