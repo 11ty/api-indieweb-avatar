@@ -6,7 +6,7 @@ const AvatarHtml = require("./functions/avatar/avatarHtml");
   let avatar = new AvatarHtml(url);
   let html = await avatar.fetch();
 
-  let stats = await avatar.getAvatar(150, "jpeg");
+  let stats = await avatar.getAvatar(150, "png");
   let format = Object.keys(stats).pop();
   console.log( format, stats );
 
