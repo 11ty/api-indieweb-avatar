@@ -1,8 +1,8 @@
 const { builder } = require("@netlify/functions");
 const AvatarHtml = require("./avatarHtml.js");
 
-const IMAGE_WIDTH = 150;
-const IMAGE_HEIGHT = 150;
+const IMAGE_WIDTH = 75;
+const IMAGE_HEIGHT = 75;
 const FALLBACK_IMAGE_FORMAT = "png";
 
 async function handler(event, context) {
