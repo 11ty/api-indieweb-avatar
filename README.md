@@ -2,13 +2,15 @@
 
 A runtime service to extract avatar images from:
 
+1. `<link rel="apple-touch-icon">`
 1. `<link rel="icon">`
-1. TODO: `<link rel="apple-touch-icon">`
 1. TODO: `favicon.ico`
 1. TODO: `<link rel="mask-icon">`
+1. TODO: Support Data URIs in attribute values. (e.g. https://joshcrain.io)
 1. TODO (maybe): `<link rel="manifest">`
 1. TODO (maybe): `<meta name="msapplication-config">`
 
+Note: `<link rel="shortcut icon">` is purposefully not supported per https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types#icon
 
 ## Usage
 
@@ -18,8 +20,9 @@ URLs have the formats:
 /:url/
 ```
 
-<!-- * `url` must be URI encoded.
+* `url` must be URI encoded.
 
+<!-- 
 ### Advanced: Manual Cache Busting
 
 If the screenshots aren’t updating at a high enough frequency you can pass in your own cache busting key using an underscore prefix `_` after your URL.
