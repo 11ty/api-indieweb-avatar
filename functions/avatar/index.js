@@ -3,7 +3,7 @@ const AvatarHtml = require("./avatarHtml.js");
 
 const IMAGE_WIDTH = 150;
 const IMAGE_HEIGHT = 150;
-const IMAGE_FORMAT = "jpeg";
+const FALLBACK_IMAGE_FORMAT = "png";
 
 async function handler(event, context) {
   // e.g. /https%3A%2F%2Fwww.11ty.dev%2F/
@@ -19,16 +19,12 @@ async function handler(event, context) {
     let avatar = new AvatarHtml(url);
     await avatar.fetch();
 
-    let avatarUrl = avatar.findAvatarUrl();
-    if(!avatarUrl) {
-      throw new Error("Avatar not found at " + url);
-    }
-    let buffer = await avatar.optimizeAvatar(avatarUrl, IMAGE_WIDTH, IMAGE_FORMAT);
+    let buffer = await avatar.getAvatar(IMAGE_WIDTH, FALLBACK_IMAGE_FORMAT);
 
     return {
       statusCode: 200,
       headers: {
-        "content-type": `image/${IMAGE_FORMAT}`
+        "content-type": `image/${FALLBACK_IMAGE_FORMAT}`
       },
       body: buffer.toString("base64"),
       isBase64Encoded: true

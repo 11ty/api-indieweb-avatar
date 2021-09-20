@@ -2,8 +2,8 @@
 
 A runtime service to extract avatar images from:
 
+1. `<link rel="apple-touch-icon">`
 1. `<link rel="icon">`
-1. TODO: `<link rel="apple-touch-icon">`
 1. TODO: `favicon.ico`
 1. TODO: `<link rel="mask-icon">`
 1. TODO (maybe): `<link rel="manifest">`
