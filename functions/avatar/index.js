@@ -3,7 +3,7 @@ const AvatarHtml = require("./avatarHtml.js");
 
 const IMAGE_WIDTH = 75;
 const IMAGE_HEIGHT = 75;
-const FALLBACK_IMAGE_FORMAT = "png";
+const FALLBACK_IMAGE_FORMAT = "jpeg";
 
 async function handler(event, context) {
   // e.g. /https%3A%2F%2Fwww.11ty.dev%2F/
