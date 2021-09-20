@@ -56,7 +56,10 @@ class AvatarHtml {
     }
 
     return results.sort((a, b) => {
-      return b.size[0] - a.size[0];
+      let ordering = b.size[0] - a.size[0];
+      if(!Number.isNaN(ordering)) { return ordering; }
+      else if(b.size[0].toLowerCase() === 'any') { return 1; }
+      else { return -1; }
     });
   }
 
