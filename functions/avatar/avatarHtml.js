@@ -94,8 +94,7 @@ class AvatarHtml {
       dryRun: true,
     });
 
-    let output = stats[imageFormat][0].buffer;
-    return output;
+    return stats;
   }
 }
 

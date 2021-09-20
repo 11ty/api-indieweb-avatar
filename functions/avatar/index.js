@@ -19,14 +19,16 @@ async function handler(event, context) {
     let avatar = new AvatarHtml(url);
     await avatar.fetch();
 
-    let buffer = await avatar.getAvatar(IMAGE_WIDTH, FALLBACK_IMAGE_FORMAT);
+    let stats = await avatar.getAvatar(IMAGE_WIDTH, FALLBACK_IMAGE_FORMAT);
+    let format = Object.keys(stats).pop();
+    let stat = stats[format][0];
 
     return {
       statusCode: 200,
       headers: {
-        "content-type": `image/${FALLBACK_IMAGE_FORMAT}`
+        "content-type": stat.sourceType,
       },
-      body: buffer.toString("base64"),
+      body: stat.buffer.toString("base64"),
       isBase64Encoded: true
     };
   } catch (error) {
