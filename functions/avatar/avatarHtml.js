@@ -83,6 +83,11 @@ class AvatarHtml {
   }
 
   async optimizeAvatar(avatarUrl, width, imageFormat) {
+    // normalize format
+    if(imageFormat && imageFormat === "svg+xml") {
+      imageFormat = "svg";
+    }
+
     let stats = await EleventyImage(avatarUrl, {
       widths: [width],
       formats: [imageFormat],
