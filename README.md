@@ -22,6 +22,10 @@ URLs have the formats:
 
 * `url` must be URI encoded.
 
+## Deploy your own
+
+<a href="https://app.netlify.com/start/deploy?repository=https://github.com/11ty/api-indieweb-avatar"><img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify"></a>
+
 <!-- 
 ### Advanced: Manual Cache Busting
 
