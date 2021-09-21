@@ -1,6 +1,8 @@
 const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 const EleventyImage = require("@11ty/eleventy-img");
+const EleventyCache = require("@11ty/eleventy-cache-assets");
+const icoToPng = require('ico-to-png')
 
 class AvatarHtml {
   constructor(url) {
@@ -81,17 +83,23 @@ class AvatarHtml {
       let format = relIcons[0].type || fallbackImageFormat;
       return this.optimizeAvatar(relIcons[0].href, width, format)
     }
-
-    throw new Error(`No icon found for ${this.url}`);
+    
+    let href = this.normalizePath("/favicon.ico");
+    let icoBuffer = await EleventyCache(href, {
+      type: "buffer",
+      dryRun: true,
+    });
+    let pngBuffer = await icoToPng(icoBuffer, width);
+    return this.optimizeAvatar(pngBuffer, width, "png");
   }
 
-  async optimizeAvatar(avatarUrl, width, imageFormat) {
+  async optimizeAvatar(sharpInput, width, imageFormat) {
     // normalize format
     if(imageFormat && imageFormat === "svg+xml") {
       imageFormat = "svg";
     }
 
-    let stats = await EleventyImage(avatarUrl, {
+    let stats = await EleventyImage(sharpInput, {
       widths: [width],
       formats: [imageFormat],
       dryRun: true,
