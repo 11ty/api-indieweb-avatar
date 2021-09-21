@@ -46,14 +46,16 @@ class AvatarHtml {
       let sizesStr = icon.attribs.sizes;
       let typeStr = icon.attribs.type;
       let type;
-      if(typeStr.startsWith("image/") || typeStr.startsWith("img/")) {
-        type = typeStr.split("/")[1];
+      if(typeStr) {
+        if(typeStr.startsWith("image/") || typeStr.startsWith("img/")) {
+          type = typeStr.split("/")[1];
+        }
       }
 
       results.push({
         href: this.normalizePath(icon.attribs.href),
         size: sizesStr ? sizesStr.split("x") : [0, 0],
-        type,
+        type: type || "auto",
       });
     }
 
