@@ -4,7 +4,7 @@ A runtime service to extract avatar images from:
 
 1. `<link rel="apple-touch-icon">`
 1. `<link rel="icon">`
-1. TODO: `favicon.ico`
+1. `favicon.ico` (added September 20, 2021)
 1. TODO: `<link rel="mask-icon">`
 1. TODO: Support Data URIs in attribute values. (e.g. https://joshcrain.io)
 1. TODO (maybe): `<link rel="manifest">`
