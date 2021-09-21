@@ -1,7 +1,8 @@
 const AvatarHtml = require("./functions/avatar/avatarHtml");
 
 (async function() {
-  let url = "https://fixa11y.com/";
+  // let url = "https://fixa11y.com/";
+  let url = "https://changelog.com/";
   console.log( url );
   let avatar = new AvatarHtml(url);
   let html = await avatar.fetch();
