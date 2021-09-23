@@ -79,6 +79,14 @@ class AvatarHtml {
     }
   }
 
+  async convertIcoToPng(href, width) {
+    let icoBuffer = await EleventyCache(href, {
+      type: "buffer",
+      dryRun: true,
+    });
+    return icoToPng(icoBuffer, width);
+  }
+
   async getAvatar(width, fallbackImageFormat) {
     let appleTouchIconHref = this.findAppleTouchIcon();
     if(appleTouchIconHref) {
@@ -87,16 +95,17 @@ class AvatarHtml {
 
     let relIcons = this.findRelIcons();
     if(relIcons.length) {
-      let format = relIcons[0].type || fallbackImageFormat;
-      return this.optimizeAvatar(relIcons[0].href, width, format)
+      if(relIcons[0].type === "x-icon") {
+        let pngBuffer = await this.convertIcoToPng(relIcons[0].href, width);
+        return this.optimizeAvatar(pngBuffer, width, "png");
+      } else {
+        let format = relIcons[0].type || fallbackImageFormat;
+        return this.optimizeAvatar(relIcons[0].href, width, format)
+      }
     }
-    
+
     let href = this.normalizePath("/favicon.ico");
-    let icoBuffer = await EleventyCache(href, {
-      type: "buffer",
-      dryRun: true,
-    });
-    let pngBuffer = await icoToPng(icoBuffer, width);
+    let pngBuffer = await this.convertIcoToPng(href, width);
     return this.optimizeAvatar(pngBuffer, width, "png");
   }
 
