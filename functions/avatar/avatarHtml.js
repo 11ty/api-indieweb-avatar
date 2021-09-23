@@ -59,6 +59,7 @@ class AvatarHtml {
       });
     }
 
+    // TODO deprioritize "image/x-icon" if the sizes are the same
     return results.sort((a, b) => {
       let ordering = b.size[0] - a.size[0];
       if(!Number.isNaN(ordering)) { return ordering; }
