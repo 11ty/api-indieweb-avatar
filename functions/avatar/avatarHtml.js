@@ -40,7 +40,7 @@ class AvatarHtml {
   /* Returns largest found */
   findRelIcons() {
     let results = [];
-    let icons = this.$("link[rel='icon']");
+    let icons = this.$("link[rel~='icon']");
 
     for(let icon of icons) {
       let sizesStr = icon.attribs.sizes;
@@ -68,9 +68,14 @@ class AvatarHtml {
   }
 
   findAppleTouchIcon() {
-    let icon = this.$("link[rel='apple-touch-icon']");
+    let icon = this.$("link[rel~='apple-touch-icon']");
     if(icon.length) {
       return this.normalizePath(icon[0].attribs.href);
+    }
+
+    let precomposedIcon = this.$("link[rel~='apple-touch-icon-precomposed']");
+    if(precomposedIcon.length) {
+      return this.normalizePath(precomposedIcon[0].attribs.href);
     }
   }
 

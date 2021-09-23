@@ -3,14 +3,15 @@
 A runtime service to extract avatar images from:
 
 1. `<link rel="apple-touch-icon">`
+1. `<link rel="apple-touch-icon-precomposed">`
 1. `<link rel="icon">`
 1. `favicon.ico` (added September 20, 2021)
-1. TODO: `<link rel="mask-icon">`
 1. TODO: Support Data URIs in attribute values. (e.g. https://joshcrain.io)
+1. TODO: `<link rel="mask-icon">`
 1. TODO (maybe): `<link rel="manifest">`
 1. TODO (maybe): `<meta name="msapplication-config">`
 
-Note: `<link rel="shortcut icon">` is purposefully not supported per https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types#icon
+All `rel` lookups match against attribute values that are space separated lists.
 
 ## Usage
 
