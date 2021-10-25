@@ -3,6 +3,6 @@ directory = "functions"
 
 [[redirects]]
 from = "/*"
-to = "/.netlify/functions/avatar"
+to = "/.netlify/builders/avatar"
 status = 200
 force = true
