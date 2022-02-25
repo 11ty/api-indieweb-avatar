@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 const EleventyImage = require("@11ty/eleventy-img");
-const EleventyCache = require("@11ty/eleventy-cache-assets");
+const EleventyFetch = require("@11ty/eleventy-fetch");
 const icoToPng = require('ico-to-png')
 
 class AvatarHtml {
@@ -81,7 +81,7 @@ class AvatarHtml {
   }
 
   async convertIcoToPng(href, width) {
-    let icoBuffer = await EleventyCache(href, {
+    let icoBuffer = await EleventyFetch(href, {
       type: "buffer",
       dryRun: true,
     });
