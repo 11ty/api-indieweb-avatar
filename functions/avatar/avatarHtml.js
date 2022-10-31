@@ -96,7 +96,10 @@ class AvatarHtml {
 
     let relIcons = this.findRelIcons();
     if(relIcons.length) {
-      if(relIcons[0].type === "x-icon" || relIcons[0].href && relIcons[0].href.endsWith(".ico")) {
+      const isIco = relIcons[0].type === 'x-icon'
+        || relIcons[0].href.split(/[#?]/)[0].endsWith('.ico');
+
+      if(isIco) {
         let pngBuffer = await this.convertIcoToPng(relIcons[0].href, width);
         return this.optimizeAvatar(pngBuffer, width, "png");
       } else {
