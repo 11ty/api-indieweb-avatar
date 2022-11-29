@@ -2,7 +2,9 @@
   "name": "eleventy-api-indieweb-avatar",
   "version": "1.0.0",
   "description": "A runtime service to extract avatar images from the HTML on a web site.",
-  "scripts": {},
+  "scripts": {
+    "test": "node test/test.js"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",

@@ -96,7 +96,11 @@ class AvatarHtml {
 
     let relIcons = this.findRelIcons();
     if(relIcons.length) {
-      if(relIcons[0].type === "x-icon" || relIcons[0].href && relIcons[0].href.endsWith(".ico")) {
+      // https://stateofjs.com/en-us/ has a bad mime `type` for their SVG icon
+      if(relIcons[0].type === "x-icon" && !(relIcons[0].href && relIcons[0].href.endsWith(".ico"))) {
+        let format = fallbackImageFormat;
+        return this.optimizeAvatar(relIcons[0].href, width, format);
+      } else if(relIcons[0].type === "x-icon" || relIcons[0].href && relIcons[0].href.endsWith(".ico")) {
         let pngBuffer = await this.convertIcoToPng(relIcons[0].href, width);
         return this.optimizeAvatar(pngBuffer, width, "png");
       } else {
