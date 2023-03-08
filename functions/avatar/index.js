@@ -29,6 +29,8 @@ async function handler(event, context) {
         "content-type": stat.sourceType,
       },
       body: stat.buffer.toString("base64"),
+      // once per week (this value is in seconds)
+      ttl: 60*60*24*7,
       isBase64Encoded: true
     };
   } catch (error) {
