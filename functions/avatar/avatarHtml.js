@@ -119,8 +119,19 @@ class AvatarHtml {
       let pngBuffer = await this.convertIcoToPng(href, width);
       return await this.optimizeAvatar(pngBuffer, width, fallbackImageFormat);
     } catch(e) {
-      // not all favicon.ico are ico files
-      return this.optimizeAvatar(href, width, fallbackImageFormat);
+      try {
+        // not all favicon.ico are ico files
+        return await this.optimizeAvatar(href, width, fallbackImageFormat);
+      } catch(e) {
+        // if favicon.ico didn’t work, use the first header image
+        let headerImage = this.$("header img");
+        if(headerImage) {
+          let firstHeaderImageSrc = this.normalizePath(headerImage[0].attribs.src);
+          return this.optimizeAvatar(firstHeaderImageSrc, width, fallbackImageFormat);
+        }
+
+        throw e;
+      }
     }
   }
 
