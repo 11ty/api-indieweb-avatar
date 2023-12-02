@@ -55,7 +55,7 @@ class AvatarHtml {
       results.push({
         href: this.normalizePath(icon.attribs.href),
         size: sizesStr ? sizesStr.split("x") : [0, 0],
-        type: type || "auto",
+        type,
       });
     }
 
@@ -95,6 +95,8 @@ class AvatarHtml {
     }
 
     let relIcons = this.findRelIcons();
+    let fallbackIconHref;
+
     if(relIcons.length) {
       // https://stateofjs.com/en-us/ has a bad mime `type` for their SVG icon
       if(relIcons[0].type === "x-icon" && !(relIcons[0].href && relIcons[0].href.endsWith(".ico"))) {
@@ -103,15 +105,23 @@ class AvatarHtml {
       } else if(relIcons[0].type === "x-icon" || relIcons[0].href && relIcons[0].href.endsWith(".ico")) {
         let pngBuffer = await this.convertIcoToPng(relIcons[0].href, width);
         return this.optimizeAvatar(pngBuffer, width, "png");
+      } else if(!relIcons[0].type) {
+        fallbackIconHref = relIcons[0].href;
       } else {
         let format = relIcons[0].type || fallbackImageFormat;
         return this.optimizeAvatar(relIcons[0].href, width, format)
       }
     }
 
-    let href = this.normalizePath("/favicon.ico");
-    let pngBuffer = await this.convertIcoToPng(href, width);
-    return this.optimizeAvatar(pngBuffer, width, "png");
+    let href = fallbackIconHref || this.normalizePath("/favicon.ico");
+
+    try {
+      let pngBuffer = await this.convertIcoToPng(href, width);
+      return await this.optimizeAvatar(pngBuffer, width, fallbackImageFormat);
+    } catch(e) {
+      // not all favicon.ico are ico files
+      return this.optimizeAvatar(href, width, fallbackImageFormat);
+    }
   }
 
   async optimizeAvatar(sharpInput, width, imageFormat) {
