@@ -17,6 +17,8 @@ A runtime service to extract avatar images from:
 
 All `rel` lookups match against attribute values that are space separated lists.
 
+This is using [Netlify’s On Demand Builders](https://docs.netlify.com/configure-builds/on-demand-builders/) so that only one request is made to each URL independent of how many requests are made the service.
+
 ## Usage
 
 URLs have the formats:
