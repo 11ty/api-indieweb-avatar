@@ -70,12 +70,12 @@ class AvatarHtml {
 
   findAppleTouchIcon() {
     let icon = this.$("link[rel~='apple-touch-icon']");
-    if(icon.length) {
+    if(icon.length > 0) {
       return this.normalizePath(icon[0].attribs.href);
     }
 
     let precomposedIcon = this.$("link[rel~='apple-touch-icon-precomposed']");
-    if(precomposedIcon.length) {
+    if(precomposedIcon.length > 0) {
       return this.normalizePath(precomposedIcon[0].attribs.href);
     }
   }
@@ -112,7 +112,6 @@ class AvatarHtml {
         return this.optimizeAvatar(relIcons[0].href, width, format)
       }
     }
-
     let href = fallbackIconHref || this.normalizePath("/favicon.ico");
 
     try {
@@ -125,7 +124,7 @@ class AvatarHtml {
       } catch(e) {
         // if favicon.ico didn’t work, use the first header image
         let headerImage = this.$("header img");
-        if(headerImage) {
+        if(headerImage.length > 0) {
           let firstHeaderImageSrc = this.normalizePath(headerImage[0].attribs.src);
           return this.optimizeAvatar(firstHeaderImageSrc, width, fallbackImageFormat);
         }
