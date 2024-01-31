@@ -91,7 +91,12 @@ class AvatarHtml {
   async getAvatar(width, fallbackImageFormat) {
     let appleTouchIconHref = this.findAppleTouchIcon();
     if(appleTouchIconHref) {
-      return this.optimizeAvatar(appleTouchIconHref, width, fallbackImageFormat);
+      let input = appleTouchIconHref;
+      // discord.com uses an .ico file in its apple touch icon
+      if(appleTouchIconHref.endsWith(".ico")) {
+        input = await this.convertIcoToPng(appleTouchIconHref, width);
+      }
+      return this.optimizeAvatar(input, width, fallbackImageFormat);
     }
 
     let relIcons = this.findRelIcons();

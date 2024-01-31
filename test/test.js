@@ -11,8 +11,9 @@ const AvatarHtml = require("../functions/avatar/avatarHtml");
   // let url = "https://twitter.com/";
   // let url = "https://opencollective.com/";
   // let url = "https://www.linkedin.com";
-  let url = "https://www.zachleat.com/twitter/";
-  console.log( url );
+  // let url = "https://www.zachleat.com/twitter/";
+  // let url = "https://codepen.io";
+  let url = "https://discord.com/";
   let avatar = new AvatarHtml(url);
   let html = await avatar.fetch();
 
