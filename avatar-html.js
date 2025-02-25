@@ -1,5 +1,4 @@
-import fetch from "node-fetch";
-import cheerio from "cheerio";
+import * as cheerio from 'cheerio';
 import EleventyImage from "@11ty/eleventy-img";
 import EleventyFetch from "@11ty/eleventy-fetch";
 import icoToPng from "ico-to-png";
