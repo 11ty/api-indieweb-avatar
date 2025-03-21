@@ -1,6 +1,7 @@
 import AvatarHtml from "../avatar-html.js";
 
-const ONE_DAY = 60*60*24;
+const ONE_HOUR = 60*60;
+const ONE_DAY = ONE_HOUR*24;
 const ONE_WEEK = ONE_DAY*7;
 
 const IMAGE_WIDTH = 60;
@@ -61,7 +62,7 @@ export async function GET(request, context) {
       status: 200,
       headers: {
         "content-type": stat.sourceType,
-        "cache-control": `public, s-maxage=${ONE_WEEK}, stale-while-revalidate=${ONE_DAY}`
+        "cache-control": `public, max-age=${ONE_HOUR}, s-maxage=${ONE_WEEK}, stale-while-revalidate=${ONE_DAY}`
       }
     });
   } catch (error) {
