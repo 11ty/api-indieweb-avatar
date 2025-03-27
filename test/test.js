@@ -1,4 +1,5 @@
-import AvatarHtml from "../functions/avatar/avatarHtml";
+import AvatarHtml from "../avatar-html.js";
+// process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 (async function() {
   // let url = "https://fixa11y.com/"; // svg
@@ -13,13 +14,18 @@ import AvatarHtml from "../functions/avatar/avatarHtml";
   // let url = "https://www.linkedin.com";
   // let url = "https://www.zachleat.com/twitter/";
   // let url = "https://codepen.io";
-  let url = "https://discord.com/";
+  // let url = "https://discord.com/";
+  // let url = "https://www.stanford.edu"; // bad cert error
+  let url = "https://www.noaa.gov/"; // bad cert error
   let avatar = new AvatarHtml(url);
   let html = await avatar.fetch();
 
-  let stats = await avatar.getAvatar(150, "png");
-  let format = Object.keys(stats).pop();
-  console.log( format, stats );
+  try {
+    let stats = await avatar.getAvatar(150, "png");
+    console.log( stats );
+  } catch(e) {
+    console.log( "ERROR", e );
+  }
 
   // console.log( stats[format][0].buffer.toString() );
 })();

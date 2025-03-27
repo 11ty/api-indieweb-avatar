@@ -3,6 +3,8 @@ import EleventyImage from "@11ty/eleventy-img";
 import EleventyFetch from "@11ty/eleventy-fetch";
 import icoToPng from "ico-to-png";
 
+const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36";
+
 class AvatarHtml {
   constructor(url) {
     this.url = url;
@@ -23,7 +25,11 @@ class AvatarHtml {
   }
 
   async fetch() {
-    let response = await fetch(this.url);
+    let response = await fetch(this.url, {
+      headers: {
+        "user-agent": USER_AGENT
+      }
+    });
     let body = await response.text();
     this.body = body;
 
@@ -39,6 +45,7 @@ class AvatarHtml {
   /* Returns largest found */
   findRelIcons() {
     let results = [];
+
     let icons = this.$("link[rel~='icon']");
 
     for(let icon of icons) {
@@ -83,6 +90,11 @@ class AvatarHtml {
     let icoBuffer = await EleventyFetch(href, {
       type: "buffer",
       dryRun: true,
+      fetchOptions: {
+        headers: {
+          "user-agent": USER_AGENT
+        }
+      }
     });
     return icoToPng(icoBuffer, width);
   }
@@ -143,14 +155,12 @@ class AvatarHtml {
     if(imageFormat && (imageFormat === "svg+xml" || imageFormat === "svg")) {
       imageFormat = "png";
     }
-
-    let stats = await EleventyImage(sharpInput, {
+    return EleventyImage(sharpInput, {
       widths: [width],
       formats: [imageFormat],
       dryRun: true,
+      failOnError: true,
     });
-
-    return stats;
   }
 }
 
