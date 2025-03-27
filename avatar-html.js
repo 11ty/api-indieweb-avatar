@@ -77,7 +77,25 @@ class AvatarHtml {
   findAppleTouchIcon() {
     let icon = this.$("link[rel~='apple-touch-icon']");
     if(icon.length > 0) {
-      return this.normalizePath(icon[0].attribs.href);
+      let hrefs = [];
+      for(let i of icon) {
+        let size = parseInt(i.attribs.sizes) || 0; // NUMxNUM parses to NUM
+        hrefs.push({ href: i.attribs.href, size });
+      }
+      hrefs.sort((a, b) => {
+        if(a.size && b.size) {
+          return b.size - a.size;
+        }
+        if(a.size) {
+          return -1;
+        }
+        if(b.size) {
+          return 1;
+        }
+        return 0;
+      });
+
+      return this.normalizePath(hrefs[0].href);
     }
 
     let precomposedIcon = this.$("link[rel~='apple-touch-icon-precomposed']");
