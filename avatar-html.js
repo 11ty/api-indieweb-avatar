@@ -3,7 +3,7 @@ import EleventyImage from "@11ty/eleventy-img";
 import EleventyFetch from "@11ty/eleventy-fetch";
 import icoToPng from "ico-to-png";
 
-const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36";
+const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36";
 
 class AvatarHtml {
   constructor(url) {
