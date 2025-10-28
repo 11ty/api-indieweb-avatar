@@ -117,12 +117,22 @@ class AvatarHtml {
     return icoToPng(icoBuffer, width);
   }
 
+  static isIcoHref(ref) {
+    if(!ref) {
+      return false;
+    }
+
+    // properly ignores searchparams
+    let u = new URL(ref, "https://example.com");
+    return u.pathname.endsWith(".ico");
+  }
+
   async getAvatar(width, fallbackImageFormat) {
     let appleTouchIconHref = this.findAppleTouchIcon();
     if(appleTouchIconHref) {
       let input = appleTouchIconHref;
       // discord.com uses an .ico file in its apple touch icon
-      if(appleTouchIconHref.endsWith(".ico")) {
+      if(AvatarHtml.isIcoHref(appleTouchIconHref)) {
         input = await this.convertIcoToPng(appleTouchIconHref, width);
       }
       return this.optimizeAvatar(input, width, fallbackImageFormat);
@@ -133,10 +143,10 @@ class AvatarHtml {
 
     if(relIcons.length) {
       // https://stateofjs.com/en-us/ has a bad mime `type` for their SVG icon
-      if(relIcons[0].type === "x-icon" && !(relIcons[0].href && relIcons[0].href.endsWith(".ico"))) {
+      if(relIcons[0].type === "x-icon" && !(relIcons[0].href && AvatarHtml.isIcoHref(relIcons[0].href))) {
         let format = fallbackImageFormat;
         return this.optimizeAvatar(relIcons[0].href, width, format);
-      } else if(relIcons[0].type === "x-icon" || relIcons[0].href && relIcons[0].href.endsWith(".ico")) {
+      } else if(relIcons[0].type === "x-icon" || relIcons[0].href && AvatarHtml.isIcoHref(relIcons[0].href)) {
         let pngBuffer = await this.convertIcoToPng(relIcons[0].href, width);
         return this.optimizeAvatar(pngBuffer, width, "png");
       } else if(!relIcons[0].type) {
@@ -146,6 +156,8 @@ class AvatarHtml {
         return this.optimizeAvatar(relIcons[0].href, width, format)
       }
     }
+
+    // microsoft.com/apple-touch-icon.png also works, apparently
     let href = fallbackIconHref || this.normalizePath("/favicon.ico");
 
     try {
