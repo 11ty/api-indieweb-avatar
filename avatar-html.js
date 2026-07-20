@@ -142,11 +142,16 @@ class AvatarHtml {
     let fallbackIconHref;
 
     if(relIcons.length) {
+      // HARDCODE WORKAROUND: reported png when it was an .ico
+      if(relIcons[0].href.startsWith("https://www.orange.com") && relIcons[0].type === "png") {
+        relIcons[0].forceType = "x-icon";
+      }
+
       // https://stateofjs.com/en-us/ has a bad mime `type` for their SVG icon
-      if(relIcons[0].type === "x-icon" && !(relIcons[0].href && AvatarHtml.isIcoHref(relIcons[0].href))) {
+      if(!relIcons[0].forceType && relIcons[0].type === "x-icon" && (!relIcons[0].href || !AvatarHtml.isIcoHref(relIcons[0].href))) {
         let format = fallbackImageFormat;
         return this.optimizeAvatar(relIcons[0].href, width, format);
-      } else if(relIcons[0].type === "x-icon" || relIcons[0].href && AvatarHtml.isIcoHref(relIcons[0].href)) {
+      } else if((relIcons[0].forceType || relIcons[0].type) === "x-icon" || relIcons[0].href && AvatarHtml.isIcoHref(relIcons[0].href)) {
         let pngBuffer = await this.convertIcoToPng(relIcons[0].href, width);
         return this.optimizeAvatar(pngBuffer, width, "png");
       } else if(!relIcons[0].type) {
