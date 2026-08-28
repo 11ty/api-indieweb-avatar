@@ -6,8 +6,10 @@ import icoToPng from "ico-to-png";
 const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36";
 
 class AvatarHtml {
-  constructor(url) {
+  constructor(url, options = {}) {
     this.url = url;
+    // aborts any in-flight requests, e.g. when a host stalls past our time budget
+    this.signal = options.signal;
 
     if(!this.isFullUrl(url)) {
       throw new Error(`Invalid \`url\`: ${url}`);
@@ -28,7 +30,8 @@ class AvatarHtml {
     let response = await fetch(this.url, {
       headers: {
         "user-agent": USER_AGENT
-      }
+      },
+      signal: this.signal,
     });
     let body = await response.text();
     this.body = body;
@@ -121,7 +124,8 @@ class AvatarHtml {
       fetchOptions: {
         headers: {
           "user-agent": USER_AGENT
-        }
+        },
+        signal: this.signal,
       }
     });
     return icoToPng(icoBuffer, width);
