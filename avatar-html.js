@@ -49,6 +49,16 @@ class AvatarHtml {
     let icons = this.$("link[rel~='icon']");
 
     for(let icon of icons) {
+      if(!icon.attribs.href) {
+        continue;
+      }
+
+      // adobe.com uses `data:,` to opt-out of the browser’s default /favicon.ico request
+      let href = this.normalizePath(icon.attribs.href);
+      if(!AvatarHtml.isHttpHref(href)) {
+        continue;
+      }
+
       let sizesStr = icon.attribs.sizes;
       let typeStr = icon.attribs.type;
       let type;
@@ -59,7 +69,7 @@ class AvatarHtml {
       }
 
       results.push({
-        href: this.normalizePath(icon.attribs.href),
+        href,
         size: sizesStr ? sizesStr.split("x") : [0, 0],
         type,
       });
@@ -115,6 +125,15 @@ class AvatarHtml {
       }
     });
     return icoToPng(icoBuffer, width);
+  }
+
+  static isHttpHref(href) {
+    try {
+      let u = new URL(href);
+      return u.protocol === "https:" || u.protocol === "http:";
+    } catch(e) {
+      return false;
+    }
   }
 
   static isIcoHref(ref) {
