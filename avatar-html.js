@@ -2,6 +2,7 @@ import * as cheerio from 'cheerio';
 import EleventyImage from "@11ty/eleventy-img";
 import EleventyFetch from "@11ty/eleventy-fetch";
 import icoToPng from "ico-to-png";
+import { isSSRFSafeURL } from "ssrfcheck";
 
 const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36";
 
@@ -16,14 +17,11 @@ class AvatarHtml {
     }
   }
 
+  // Rejects invalid urls, local paths, non-http(s) protocols, and literal
+  // private/reserved addresses. `autoPrependProtocol` is off so a bare
+  // `example.com` stays invalid, the way it was before.
   isFullUrl(url) {
-    try {
-      new URL(url);
-      return true;
-    } catch(e) {
-      // invalid url OR local path
-      return false;
-    }
+    return isSSRFSafeURL(url, { autoPrependProtocol: false });
   }
 
   async fetch() {
@@ -58,7 +56,7 @@ class AvatarHtml {
 
       // adobe.com uses `data:,` to opt-out of the browser’s default /favicon.ico request
       let href = this.normalizePath(icon.attribs.href);
-      if(!AvatarHtml.isHttpHref(href)) {
+      if(!this.isFullUrl(href)) {
         continue;
       }
 
@@ -129,15 +127,6 @@ class AvatarHtml {
       }
     });
     return icoToPng(icoBuffer, width);
-  }
-
-  static isHttpHref(href) {
-    try {
-      let u = new URL(href);
-      return u.protocol === "https:" || u.protocol === "http:";
-    } catch(e) {
-      return false;
-    }
   }
 
   static isIcoHref(ref) {

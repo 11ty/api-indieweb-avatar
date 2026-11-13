@@ -30,6 +30,7 @@
     "@11ty/eleventy-fetch": "^5.0.2",
     "@11ty/eleventy-img": "^6.0.1",
     "cheerio": "^1.0.0",
-    "ico-to-png": "^0.2.2"
+    "ico-to-png": "^0.2.2",
+    "ssrfcheck": "^1.4.0"
   }
 }
